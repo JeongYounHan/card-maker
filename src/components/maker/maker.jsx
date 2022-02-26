@@ -1,7 +1,31 @@
 import React from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Footer from "../footer/footer";
+import Header from "../header/header";
+import styles from "./maker.module.css";
 
-const Maker = (props) => {
-  return <h1>Maker</h1>;
+const Maker = ({ authService }) => {
+  const navigate = useNavigate();
+  const goToMaker = () => {
+    navigate("/");
+  };
+
+  const onLogout = () => {
+    authService.logout();
+  };
+
+  useEffect(() => {
+    authService.onAuthChange((user) => {
+      !user && goToMaker();
+    });
+  });
+  return (
+    <section className={styles.maker}>
+      <Header onLogout={onLogout} />
+      <Footer />
+    </section>
+  );
 };
 
 export default Maker;
