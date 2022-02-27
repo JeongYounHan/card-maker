@@ -79,7 +79,7 @@ const Maker = ({ FileInput, authService }) => {
     <section className={styles.maker}>
       <Header onLogout={onLogout} />
       <div className={styles.container}>
-        <Editor FileInput={FileInput} cards={cards} createOrUpdateCard={createOrUpdateCard} updateCard={createOrUpdateCard} deleteCard={deleteCard} />
+        <Editor FileInput={FileInput} cards={cards} createOrUpdateCard={createOrUpdateCard} addCard={createOrUpdateCard} updateCard={createOrUpdateCard} deleteCard={deleteCard} />
         <Preview cards={cards} />
       </div>
       <Footer />
