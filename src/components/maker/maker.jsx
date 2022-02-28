@@ -14,10 +14,6 @@ const Maker = ({ FileInput, authService, cardRepository }) => {
   const [userId, setUserId] = useState(historyState && historyState.id);
   const navigate = useNavigate();
 
-  const goToMaker = () => {
-    navigate("/");
-  };
-
   const onLogout = () => {
     authService.logout();
   };
@@ -31,17 +27,17 @@ const Maker = ({ FileInput, authService, cardRepository }) => {
     });
 
     return () => stopSync();
-  }, [userId]);
+  }, [userId, cardRepository]);
 
   useEffect(() => {
     authService.onAuthChange((user) => {
       if (user) {
         setUserId(user.uid);
       } else {
-        goToMaker();
+        navigate("/");
       }
     });
-  });
+  }, [authService, navigate]);
 
   const createOrUpdateCard = (card) => {
     setCards((cards) => {
