@@ -1,4 +1,5 @@
 import React from "react";
+import { useCallback } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -39,14 +40,17 @@ const Maker = ({ FileInput, authService, cardRepository }) => {
     });
   }, [authService, navigate]);
 
-  const createOrUpdateCard = (card) => {
-    setCards((cards) => {
-      const updated = { ...cards };
-      updated[card.id] = card;
-      return updated;
-    });
-    cardRepository.saveCard(userId, card);
-  };
+  const createOrUpdateCard = useCallback(
+    (card) => {
+      setCards((cards) => {
+        const updated = { ...cards };
+        updated[card.id] = card;
+        return updated;
+      });
+      cardRepository.saveCard(userId, card);
+    },
+    [cardRepository, userId]
+  );
 
   const deleteCard = (card) => {
     setCards((cards) => {
