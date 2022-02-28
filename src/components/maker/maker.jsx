@@ -15,9 +15,9 @@ const Maker = ({ FileInput, authService, cardRepository }) => {
   const [userId, setUserId] = useState(historyState && historyState.id);
   const navigate = useNavigate();
 
-  const onLogout = () => {
+  const onLogout = useCallback(() => {
     authService.logout();
-  };
+  }, [authService]);
 
   useEffect(() => {
     if (!userId) {
@@ -52,14 +52,17 @@ const Maker = ({ FileInput, authService, cardRepository }) => {
     [cardRepository, userId]
   );
 
-  const deleteCard = (card) => {
-    setCards((cards) => {
-      const updated = { ...cards };
-      delete updated[card.id];
-      return updated;
-    });
-    cardRepository.removeCard(userId, card);
-  };
+  const deleteCard = useCallback(
+    (card) => {
+      setCards((cards) => {
+        const updated = { ...cards };
+        delete updated[card.id];
+        return updated;
+      });
+      cardRepository.removeCard(userId, card);
+    },
+    [cardRepository, userId]
+  );
 
   return (
     <section className={styles.maker}>
